@@ -1,0 +1,71 @@
+</html>
+<!DOCTYPE html>
+
+<html lang="en">
+<meta charset="UTF-8">
+<title>Monitoreo Impresoras Mundo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="">
+<style>
+body {font-family: "lato", sans-serif} 
+.mySlides {display: none}
+</style>
+<script src=""></script>
+<div class="w3-bar w3-blue">
+	<a href="{% url 'index'%}" class="w3-bar-item w3-button w3-mobile">Inicio</a>
+	<a href="{% url 'buscar' %}" class="w3-bar-item w3-button w3-mobile">Buscar</a>
+
+</div>
+
+<body>
+	<!--Cargar path de static como variable-->
+{% load static %}
+{% static "" as baseUrl %}
+
+<div class="w3-card w3-mobile">
+	<div class="w3-row-padding w3-stretch">
+
+		{% if anteayer == "Sat" and hour < "16:35" %} <!--Si es lunes, muestra gráfco del sábado-->
+		<div class="w3-half w3-center"><!--Gráfico del sábado-->
+			<img class="w3-image w3-mobile" src="{{ baseUrl }}{{ before_yesterday_route }}" alt="before_yesterday_graph">
+		</div>
+		{% elif hour <= "16:35" %} <!--Si no es la hora indicada muestra el grafico del día anterior-->
+		<div class="w3-half w3-center"><!--Gráfico del día anterior-->
+			<img class="w3-image w3-mobile" src="{{ baseUrl }}{{ yesterday_route }}" alt="yesterday_graph">
+		</div>
+
+
+		{% else %} <!--De lo contrario muestra el grafico del dia actual-->
+		<div class="w3-half w3-center"><!--Gráfico del día actual-->
+			<img class="w3-image w3-mobile" src="{{ baseUrl }}{{ route }}" alt="today_graph">
+		</div>
+
+		{% endif %}
+
+		{% if anteayer == "Sat" %} <!--Si es lunes, muestra gráfco del sábado-->
+		<div class="w3-half w3-center"><!--Gráfico del sábado-->
+			<img class="w3-image w3-mobile" src="{{ baseUrl }}{{ before_yesterday_route }}" alt="before_yesterday_graph">
+		</div>
+
+		{% elif hour <= "16:35" %} <!--Si no es la hora indicada, muestra el grafico de anteayer-->
+		<div class="w3-half w3-center"><!--Gráfico de anteayer-->
+			<img class="w3-image w3-mobile" src="{{ baseUrl }}{{ before_yesterday_route }}" alt="yesterday_graph">
+		</div>
+
+		{% else %} <!--De lo contrario, muestra el gráfico del día anterior-->
+		<div class="w3-half w3-center"><!--Gráfico del día anterior-->
+			<img class="w3-image w3-mobile" src="{{ baseUrl }}{{ yesterday_route }}" alt="yesterday_graph">
+		</div>
+		{% endif %}
+	</div>
+</div>
+
+</div>
+
+</body>
+</html>
